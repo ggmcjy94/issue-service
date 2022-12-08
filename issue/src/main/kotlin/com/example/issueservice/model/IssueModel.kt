@@ -1,5 +1,6 @@
 package com.example.issueservice.model
 
+import com.example.issueservice.domain.Comment
 import com.example.issueservice.domain.Issue
 import com.example.issueservice.domain.enums.IssuePriority
 import com.example.issueservice.domain.enums.IssueStatus
@@ -17,6 +18,7 @@ data class IssueRequest (
 
 data class IssueResponse (
     val id : Long,
+    val comments:List<CommentResponse> = emptyList(),
     val summary:String,
     val description: String,
     val userId: Long,
@@ -30,12 +32,12 @@ data class IssueResponse (
     val updatedAt: LocalDateTime?,
 ) {
     companion object {
-
         operator fun invoke(issue: Issue) =
             with(issue) { // with (issue) 를 사용하여 this 가 issue 가 됌
                 IssueResponse (
                     id = id!!,
                     summary = summary,
+                    comments = comments.sortedByDescending(Comment::id).map(Comment::toResponse),
                     description = description,
                     userId= userId,
                     type= type,
