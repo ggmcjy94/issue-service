@@ -41,7 +41,7 @@ const IssueEditForm = {
                 <div>{{issue.createdAt}}</div>
             </div>
         </q-card-section>
-        
+
          <q-card-section>
             <div v-if="issue.createdAt !== issue.updatedAt">
                 <span class="text-h6">수정일시</span>
